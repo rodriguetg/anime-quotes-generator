@@ -36,7 +36,8 @@ function App() {
     const fetchQuote = async () => {
       setLoading(true);
       setError(null);
-      const apiUrl = process.env.REACT_APP_API_URL || 'https://anime-quotes-api.onrender.com/api/quotes/random';
+      const baseUrl = process.env.REACT_APP_API_URL || 'https://anime-quotes-api.onrender.com';
+      const apiUrl = `${baseUrl}/api/quotes/random`;
       console.log('Tentative de connexion à:', apiUrl);
       
       try {
@@ -158,7 +159,8 @@ function App() {
                           onClick={() => {
                             setLoading(true);
                             setError(null);
-                            fetch(process.env.REACT_APP_API_URL || 'https://anime-quotes-api.onrender.com/api/quotes/random')
+                            const baseUrl = process.env.REACT_APP_API_URL || 'https://anime-quotes-api.onrender.com';
+                            fetch(`${baseUrl}/api/quotes/random`)
                               .then(response => {
                                 if (!response.ok) {
                                   throw new Error('Erreur réseau');
