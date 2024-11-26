@@ -65,17 +65,17 @@ const favoriteIconVariants = {
 };
 
 const StyledCard = styled(motion.div)(({ theme }) => ({
-  background: 'rgba(255, 255, 255, 0.9)',
+  background: 'rgba(255, 255, 255, 0.95)',
   backdropFilter: 'blur(10px)',
   borderRadius: theme.shape.borderRadius,
   padding: theme.spacing(3),
   boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.3)',
-  border: '1px solid rgba(255, 255, 255, 0.4)',
+  border: '1px solid rgba(255, 255, 255, 0.6)',
   transition: 'all 0.3s ease-in-out',
   '&:hover': {
     transform: 'translateY(-5px)',
     boxShadow: '0 12px 40px 0 rgba(0, 0, 0, 0.4)',
-    border: '1px solid rgba(255, 255, 255, 0.6)',
+    border: '1px solid rgba(255, 255, 255, 0.8)',
   },
 }));
 
@@ -163,69 +163,73 @@ const QuoteCard = ({ quote: quoteData, onToggleFavorite, isFavorite }) => {
         </IconButton>
       </motion.div>
 
-      <CardContent sx={{ p: 4 }}>
-        <Typography
-          variant="h5"
-          component="div"
-          gutterBottom
-          sx={{
-            fontWeight: 500,
-            lineHeight: 1.6,
-            fontStyle: 'italic',
-            color: theme.palette.text.primary
-          }}
-        >
-          "{quote.text}"
-        </Typography>
-
-        <Box sx={{ mt: 3, textAlign: 'right' }}>
-          <Typography
-            variant="h6"
-            color="primary"
-            sx={{ fontWeight: 600 }}
+      <StyledCard>
+        <CardContent sx={{ p: 4 }}>
+          <Typography 
+            variant="h5" 
+            component="div" 
+            gutterBottom 
+            sx={{ 
+              color: 'rgba(0, 0, 0, 0.87)',
+              fontWeight: 500,
+              textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
+              mb: 2
+            }}
           >
-            {quote.character}
+            {quote.text}
           </Typography>
-          <Typography
-            variant="subtitle1"
-            color="text.secondary"
-            sx={{ fontStyle: 'italic' }}
+          <Typography 
+            variant="subtitle1" 
+            sx={{ 
+              color: 'rgba(0, 0, 0, 0.7)',
+              fontStyle: 'italic',
+              fontWeight: 500
+            }}
+          >
+            - {quote.character}
+          </Typography>
+          <Typography 
+            variant="body2" 
+            sx={{ 
+              color: 'rgba(0, 0, 0, 0.6)',
+              mt: 1
+            }}
           >
             {quote.anime}
           </Typography>
-        </Box>
 
-        <Box sx={{ mt: 3, display: 'flex', justifyContent: 'center', gap: 2 }}>
-          {['twitter', 'facebook', 'whatsapp'].map((platform) => (
-            <motion.div
-              key={platform}
-              whileHover="hover"
-              whileTap="tap"
-              variants={shareIconVariants}
-            >
-              <IconButton
-                href={getShareUrl(platform)}
-                target="_blank"
-                rel="noopener noreferrer"
-                sx={{
-                  color: {
-                    twitter: '#1DA1F2',
-                    facebook: '#4267B2',
-                    whatsapp: '#25D366'
-                  }[platform],
-                  '&:hover': {
-                    backgroundColor: 'rgba(0, 0, 0, 0.04)'
-                  }
-                }}
+          <Box sx={{ mt: 3, display: 'flex', justifyContent: 'center', gap: 2 }}>
+            {['twitter', 'facebook', 'whatsapp'].map((platform) => (
+              <motion.div
+                key={platform}
+                whileHover="hover"
+                whileTap="tap"
+                variants={shareIconVariants}
               >
-                {platform === 'twitter' && <TwitterIcon />}
-                {platform === 'facebook' && <FacebookIcon />}
-                {platform === 'whatsapp' && <WhatsAppIcon />}
-              </IconButton>
-            </motion.div>
-          ))}
-        </Box>
-      </CardContent>
+                <IconButton
+                  href={getShareUrl(platform)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  sx={{
+                    color: {
+                      twitter: '#1DA1F2',
+                      facebook: '#4267B2',
+                      whatsapp: '#25D366'
+                    }[platform],
+                    '&:hover': {
+                      backgroundColor: 'rgba(0, 0, 0, 0.04)'
+                    }
+                  }}
+                >
+                  {platform === 'twitter' && <TwitterIcon />}
+                  {platform === 'facebook' && <FacebookIcon />}
+                  {platform === 'whatsapp' && <WhatsAppIcon />}
+                </IconButton>
+              </motion.div>
+            ))}
+          </Box>
+        </CardContent>
+      </StyledCard>
     </motion.div>
   );
 };

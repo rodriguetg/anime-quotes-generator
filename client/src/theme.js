@@ -16,21 +16,35 @@ const theme = createTheme({
       default: '#f5f5f5',
       paper: '#ffffff',
     },
+    text: {
+      primary: 'rgba(0, 0, 0, 0.87)',
+      secondary: 'rgba(0, 0, 0, 0.7)',
+      disabled: 'rgba(0, 0, 0, 0.5)',
+    },
   },
   typography: {
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
     h5: {
       fontWeight: 500,
+      lineHeight: 1.5,
+      letterSpacing: '0.5px',
     },
     h6: {
       fontWeight: 500,
+      letterSpacing: '0.25px',
     },
     subtitle1: {
-      fontSize: '1rem',
+      fontSize: '1.1rem',
+      fontWeight: 400,
+      letterSpacing: '0.15px',
+    },
+    body2: {
+      fontSize: '0.95rem',
+      letterSpacing: '0.25px',
     },
   },
   shape: {
-    borderRadius: 8,
+    borderRadius: 12,
   },
   components: {
     MuiCard: {
