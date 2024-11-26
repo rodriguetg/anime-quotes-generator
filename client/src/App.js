@@ -36,16 +36,25 @@ function App() {
     const fetchQuote = async () => {
       setLoading(true);
       setError(null);
+      const apiUrl = process.env.REACT_APP_API_URL || 'https://anime-quotes-api.onrender.com/api/quotes/random';
+      console.log('Tentative de connexion à:', apiUrl);
+      
       try {
-        const response = await fetch(process.env.REACT_APP_API_URL || 'https://votre-backend-url.onrender.com/api/quotes/random');
+        const response = await fetch(apiUrl);
+        console.log('Statut de la réponse:', response.status);
+        
         if (!response.ok) {
-          throw new Error('Erreur réseau');
+          const errorText = await response.text();
+          console.error('Réponse non-OK:', errorText);
+          throw new Error(`Erreur réseau: ${response.status} ${response.statusText}`);
         }
+        
         const data = await response.json();
+        console.log('Données reçues:', data);
         setQuote(data);
       } catch (error) {
-        console.error('Erreur:', error);
-        setError('Erreur lors de la récupération de la citation. Veuillez réessayer.');
+        console.error('Erreur détaillée:', error);
+        setError(`Erreur lors de la récupération de la citation: ${error.message}`);
       } finally {
         setLoading(false);
       }
@@ -149,7 +158,7 @@ function App() {
                           onClick={() => {
                             setLoading(true);
                             setError(null);
-                            fetch(process.env.REACT_APP_API_URL || 'https://votre-backend-url.onrender.com/api/quotes/random')
+                            fetch(process.env.REACT_APP_API_URL || 'https://anime-quotes-api.onrender.com/api/quotes/random')
                               .then(response => {
                                 if (!response.ok) {
                                   throw new Error('Erreur réseau');
