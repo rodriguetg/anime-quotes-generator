@@ -32,27 +32,26 @@ function App() {
     return colors[category] || colors.default;
   };
 
-  const fetchRandomQuote = useEffect(() => {
-    setLoading(true);
-    setError(null);
-    fetch(process.env.REACT_APP_API_URL || 'https://votre-backend-url.onrender.com/api/quotes/random')
-      .then(response => {
+  useEffect(() => {
+    const fetchQuote = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await fetch(process.env.REACT_APP_API_URL || 'https://votre-backend-url.onrender.com/api/quotes/random');
         if (!response.ok) {
           throw new Error('Erreur réseau');
         }
-        return response.json();
-      })
-      .then(data => {
+        const data = await response.json();
         setQuote(data);
-        setBgColor(getBackgroundColor(data.quote.category));
-      })
-      .catch(error => {
+      } catch (error) {
         console.error('Erreur:', error);
         setError('Erreur lors de la récupération de la citation. Veuillez réessayer.');
-      })
-      .finally(() => {
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchQuote();
   }, []);
 
   useEffect(() => {
@@ -147,7 +146,27 @@ function App() {
                         <Button
                           variant="contained"
                           color="primary"
-                          onClick={fetchRandomQuote}
+                          onClick={() => {
+                            setLoading(true);
+                            setError(null);
+                            fetch(process.env.REACT_APP_API_URL || 'https://votre-backend-url.onrender.com/api/quotes/random')
+                              .then(response => {
+                                if (!response.ok) {
+                                  throw new Error('Erreur réseau');
+                                }
+                                return response.json();
+                              })
+                              .then(data => {
+                                setQuote(data);
+                              })
+                              .catch(error => {
+                                console.error('Erreur:', error);
+                                setError('Erreur lors de la récupération de la citation. Veuillez réessayer.');
+                              })
+                              .finally(() => {
+                                setLoading(false);
+                              });
+                          }}
                           startIcon={<RefreshIcon />}
                           sx={{
                             borderRadius: '50px',
