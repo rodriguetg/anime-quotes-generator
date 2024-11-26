@@ -176,27 +176,30 @@ const QuoteCard = ({ quote: quoteData, onToggleFavorite, isFavorite }) => {
               mb: 2
             }}
           >
-            {quote.text}
+            "{quote.text}"
           </Typography>
-          <Typography 
-            variant="subtitle1" 
-            sx={{ 
-              color: 'rgba(0, 0, 0, 0.7)',
-              fontStyle: 'italic',
-              fontWeight: 500
-            }}
-          >
-            - {quote.character}
-          </Typography>
-          <Typography 
-            variant="body2" 
-            sx={{ 
-              color: 'rgba(0, 0, 0, 0.6)',
-              mt: 1
-            }}
-          >
-            {quote.anime}
-          </Typography>
+
+          <Box sx={{ mt: 3, textAlign: 'right' }}>
+            <Typography 
+              variant="subtitle1" 
+              sx={{ 
+                color: 'rgba(0, 0, 0, 0.7)',
+                fontStyle: 'italic',
+                fontWeight: 500
+              }}
+            >
+              - {quote.character}
+            </Typography>
+            <Typography 
+              variant="body2" 
+              sx={{ 
+                color: 'rgba(0, 0, 0, 0.6)',
+                mt: 0.5
+              }}
+            >
+              {quote.anime}
+            </Typography>
+          </Box>
 
           <Box sx={{ mt: 3, display: 'flex', justifyContent: 'center', gap: 2 }}>
             {['twitter', 'facebook', 'whatsapp'].map((platform) => (
