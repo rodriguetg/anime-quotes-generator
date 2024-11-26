@@ -1,12 +1,12 @@
 import React from 'react';
-import { Card, CardContent, Typography, IconButton, Box, useTheme } from '@mui/material';
+import { CardContent, Typography, IconButton, Box, useTheme } from '@mui/material';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import styled from '@mui/styled-engine';
 
 const cardVariants = {
@@ -105,131 +105,128 @@ const QuoteCard = ({ quote: quoteData, onToggleFavorite, isFavorite }) => {
   };
 
   return (
-    <AnimatePresence mode="wait">
-      <StyledCard
-        key={quote.text}
-        variants={cardVariants}
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      variants={cardVariants}
+      className="quote-card-container"
+    >
+      <motion.div
+        variants={quoteIconVariants}
         initial="hidden"
         animate="visible"
-        exit="exit"
-        className="quote-card-container"
+        style={{
+          position: 'absolute',
+          top: -20,
+          left: -20,
+          background: theme.palette.primary.main,
+          borderRadius: '50%',
+          padding: '10px',
+          boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
+        }}
       >
-        <motion.div
-          variants={quoteIconVariants}
-          initial="hidden"
-          animate="visible"
-          style={{
-            position: 'absolute',
-            top: -20,
-            left: -20,
-            background: theme.palette.primary.main,
-            borderRadius: '50%',
-            padding: '10px',
-            boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
-          }}
-        >
-          <FormatQuoteIcon sx={{ color: 'white', fontSize: 30 }} />
-        </motion.div>
+        <FormatQuoteIcon sx={{ color: 'white', fontSize: 30 }} />
+      </motion.div>
 
-        <motion.div
-          style={{
-            position: 'absolute',
-            top: -20,
-            right: -20,
-            zIndex: 1
-          }}
-          whileHover="hover"
-          whileTap="tap"
-          variants={shareIconVariants}
-        >
-          <IconButton
-            onClick={() => onToggleFavorite(quote)}
-            sx={{
+      <motion.div
+        style={{
+          position: 'absolute',
+          top: -20,
+          right: -20,
+          zIndex: 1
+        }}
+        whileHover="hover"
+        whileTap="tap"
+        variants={shareIconVariants}
+      >
+        <IconButton
+          onClick={() => onToggleFavorite(quote)}
+          sx={{
+            background: theme.palette.background.paper,
+            boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+            '&:hover': {
               background: theme.palette.background.paper,
-              boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-              '&:hover': {
-                background: theme.palette.background.paper,
-              }
-            }}
+            }
+          }}
+        >
+          <motion.div
+            variants={favoriteIconVariants}
+            animate={isFavorite ? "animate" : "initial"}
           >
-            <motion.div
-              variants={favoriteIconVariants}
-              animate={isFavorite ? "animate" : "initial"}
-            >
-              {isFavorite ? (
-                <FavoriteIcon color="error" />
-              ) : (
-                <FavoriteBorderIcon />
-              )}
-            </motion.div>
-          </IconButton>
-        </motion.div>
+            {isFavorite ? (
+              <FavoriteIcon color="error" />
+            ) : (
+              <FavoriteBorderIcon />
+            )}
+          </motion.div>
+        </IconButton>
+      </motion.div>
 
-        <CardContent sx={{ p: 4 }}>
+      <CardContent sx={{ p: 4 }}>
+        <Typography
+          variant="h5"
+          component="div"
+          gutterBottom
+          sx={{
+            fontWeight: 500,
+            lineHeight: 1.6,
+            fontStyle: 'italic',
+            color: theme.palette.text.primary
+          }}
+        >
+          "{quote.text}"
+        </Typography>
+
+        <Box sx={{ mt: 3, textAlign: 'right' }}>
           <Typography
-            variant="h5"
-            component="div"
-            gutterBottom
-            sx={{
-              fontWeight: 500,
-              lineHeight: 1.6,
-              fontStyle: 'italic',
-              color: theme.palette.text.primary
-            }}
+            variant="h6"
+            color="primary"
+            sx={{ fontWeight: 600 }}
           >
-            "{quote.text}"
+            {quote.character}
           </Typography>
+          <Typography
+            variant="subtitle1"
+            color="text.secondary"
+            sx={{ fontStyle: 'italic' }}
+          >
+            {quote.anime}
+          </Typography>
+        </Box>
 
-          <Box sx={{ mt: 3, textAlign: 'right' }}>
-            <Typography
-              variant="h6"
-              color="primary"
-              sx={{ fontWeight: 600 }}
+        <Box sx={{ mt: 3, display: 'flex', justifyContent: 'center', gap: 2 }}>
+          {['twitter', 'facebook', 'whatsapp'].map((platform) => (
+            <motion.div
+              key={platform}
+              whileHover="hover"
+              whileTap="tap"
+              variants={shareIconVariants}
             >
-              {quote.character}
-            </Typography>
-            <Typography
-              variant="subtitle1"
-              color="text.secondary"
-              sx={{ fontStyle: 'italic' }}
-            >
-              {quote.anime}
-            </Typography>
-          </Box>
-
-          <Box sx={{ mt: 3, display: 'flex', justifyContent: 'center', gap: 2 }}>
-            {['twitter', 'facebook', 'whatsapp'].map((platform) => (
-              <motion.div
-                key={platform}
-                whileHover="hover"
-                whileTap="tap"
-                variants={shareIconVariants}
+              <IconButton
+                href={getShareUrl(platform)}
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{
+                  color: {
+                    twitter: '#1DA1F2',
+                    facebook: '#4267B2',
+                    whatsapp: '#25D366'
+                  }[platform],
+                  '&:hover': {
+                    backgroundColor: 'rgba(0, 0, 0, 0.04)'
+                  }
+                }}
               >
-                <IconButton
-                  href={getShareUrl(platform)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  sx={{
-                    color: {
-                      twitter: '#1DA1F2',
-                      facebook: '#4267B2',
-                      whatsapp: '#25D366'
-                    }[platform],
-                    '&:hover': {
-                      backgroundColor: 'rgba(0, 0, 0, 0.04)'
-                    }
-                  }}
-                >
-                  {platform === 'twitter' && <TwitterIcon />}
-                  {platform === 'facebook' && <FacebookIcon />}
-                  {platform === 'whatsapp' && <WhatsAppIcon />}
-                </IconButton>
-              </motion.div>
-            ))}
-          </Box>
-        </CardContent>
-      </StyledCard>
-    </AnimatePresence>
+                {platform === 'twitter' && <TwitterIcon />}
+                {platform === 'facebook' && <FacebookIcon />}
+                {platform === 'whatsapp' && <WhatsAppIcon />}
+              </IconButton>
+            </motion.div>
+          ))}
+        </Box>
+      </CardContent>
+    </motion.div>
   );
 };
 

@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Container, Button, Box, Typography, CircularProgress, ThemeProvider, CssBaseline, Tabs, Tab } from '@mui/material';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { Container, Button, Box, Typography, CircularProgress, ThemeProvider, Tabs, Tab } from '@mui/material';
+import { motion } from 'framer-motion';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import QuoteCard from './components/QuoteCard';
 import FavoriteQuotes from './components/FavoriteQuotes';
@@ -8,31 +8,10 @@ import AnimatedBackground from './components/AnimatedBackground';
 import theme from './theme';
 import './styles.css';
 
-const backgroundVariants = {
-  initial: {
-    scale: 1.1,
-    opacity: 0,
-  },
-  animate: {
-    scale: 1,
-    opacity: 1,
-    transition: {
-      duration: 0.8,
-    },
-  },
-  exit: {
-    opacity: 0,
-    transition: {
-      duration: 0.4,
-    },
-  },
-};
-
 function App() {
   const [quote, setQuote] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [bgColor, setBgColor] = useState('#f0f2f5');
   const [favorites, setFavorites] = useState(() => {
     const saved = localStorage.getItem('favoriteQuotes');
     return saved ? JSON.parse(saved) : [];
@@ -53,28 +32,28 @@ function App() {
     return colors[category] || colors.default;
   };
 
-  const fetchRandomQuote = useCallback(async () => {
+  const fetchRandomQuote = useEffect(() => {
     setLoading(true);
     setError(null);
-    try {
-      const response = await fetch(process.env.REACT_APP_API_URL || 'https://votre-backend-url.onrender.com/api/quotes/random');
-      if (!response.ok) {
-        throw new Error('Erreur réseau');
-      }
-      const data = await response.json();
-      setQuote(data);
-      setBgColor(getBackgroundColor(data.quote.category));
-    } catch (error) {
-      console.error('Erreur:', error);
-      setError('Erreur lors de la récupération de la citation. Veuillez réessayer.');
-    } finally {
-      setLoading(false);
-    }
+    fetch(process.env.REACT_APP_API_URL || 'https://votre-backend-url.onrender.com/api/quotes/random')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Erreur réseau');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setQuote(data);
+        setBgColor(getBackgroundColor(data.quote.category));
+      })
+      .catch(error => {
+        console.error('Erreur:', error);
+        setError('Erreur lors de la récupération de la citation. Veuillez réessayer.');
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
-
-  useEffect(() => {
-    fetchRandomQuote();
-  }, [fetchRandomQuote]);
 
   useEffect(() => {
     localStorage.setItem('favoriteQuotes', JSON.stringify(favorites));
