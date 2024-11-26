@@ -5,6 +5,3 @@
 
 [build.environment]
   CI = "false"
-
-[plugins]
-  package = []
