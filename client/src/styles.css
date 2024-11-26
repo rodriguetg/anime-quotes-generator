@@ -1,0 +1,158 @@
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Styles de base */
+body {
+  margin: 0;
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: white;
+  min-height: 100vh;
+}
+
+/* Conteneur principal */
+.app-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1c20 0%, #2c3e50 100%);
+  padding: 2rem 0;
+}
+
+.app-title {
+  font-weight: bold !important;
+  background: linear-gradient(45deg, #61dafb 30%, #bb86fc 90%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 2rem !important;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+.loading-spinner {
+  color: #61dafb !important;
+}
+
+.error-message {
+  color: #ff6b6b !important;
+  text-align: center;
+  padding: 1rem;
+  background-color: rgba(255,0,0,0.1);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.quote-card-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.quote-card {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(10px);
+  border-radius: 15px !important;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.quote-content {
+  padding: 2rem !important;
+}
+
+.quote-text {
+  color: white !important;
+  font-style: italic;
+  margin-bottom: 1.5rem !important;
+  position: relative;
+  padding-left: 20px;
+}
+
+.quote-text::before {
+  content: '"';
+  position: absolute;
+  left: -10px;
+  top: -10px;
+  font-size: 2em;
+  opacity: 0.3;
+  color: #61dafb;
+}
+
+.quote-character {
+  color: #61dafb !important;
+  margin-bottom: 0.5rem !important;
+  text-align: center !important;
+  display: block !important;
+}
+
+.quote-anime {
+  color: #bb86fc !important;
+  margin-bottom: 1.5rem !important;
+  font-style: italic;
+  text-align: center !important;
+  display: block !important;
+}
+
+.quote-category {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.category-tag {
+  background-color: rgba(187, 134, 252, 0.2);
+  color: #bb86fc;
+  padding: 4px 12px;
+  border-radius: 15px;
+  border: 1px solid rgba(187, 134, 252, 0.5);
+  font-size: 0.875rem;
+}
+
+.share-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.share-button {
+  transition: transform 0.2s !important;
+}
+
+.share-button:hover {
+  transform: scale(1.1);
+}
+
+.share-button.twitter {
+  color: #1DA1F2 !important;
+}
+
+.share-button.facebook {
+  color: #4267B2 !important;
+}
+
+.share-button.whatsapp {
+  color: #25D366 !important;
+}
+
+.new-quote-button {
+  background: linear-gradient(45deg, #61dafb 30%, #bb86fc 90%) !important;
+  border: 0;
+  color: white !important;
+  height: 48px;
+  padding: 0 30px;
+  border-radius: 24px !important;
+  box-shadow: 0 3px 5px 2px rgba(97, 218, 251, .3);
+  cursor: pointer;
+  transition: all 0.3s ease !important;
+  font-size: 1.1rem !important;
+  text-transform: none !important;
+}
+
+.new-quote-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px 4px rgba(97, 218, 251, .3);
+}
