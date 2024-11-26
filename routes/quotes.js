@@ -784,11 +784,13 @@ router.get('/quote-of-the-day', (req, res) => {
     }
 });
 
-// Obtenir une citation aléatoire avec liens de partage
-router.get('/random', async (req, res) => {
+// Route pour obtenir une citation aléatoire
+router.get('/random', (req, res) => {
     try {
+        console.log('Requête reçue sur /api/quotes/random');
         const randomIndex = Math.floor(Math.random() * animeQuotes.length);
         const quote = animeQuotes[randomIndex];
+        console.log('Citation sélectionnée:', quote);
         res.json({
             quote: quote,
             shareLinks: {
@@ -798,7 +800,7 @@ router.get('/random', async (req, res) => {
             }
         });
     } catch (error) {
-        console.error('Erreur:', error);
+        console.error('Erreur lors de la récupération de la citation:', error);
         res.status(500).json({ message: "Erreur lors de la récupération de la citation" });
     }
 });
